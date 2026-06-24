@@ -1,2 +1,2 @@
-libgl1
-libglib2.0-0
+# packages.txt can be empty or deleted if we use opencv-python-headless
+# but keeping it empty is safer to clear previous state
