@@ -68,22 +68,30 @@ if model:
 
     elif mode == "Webcam":
         st.write("Real-time webcam feed with ASL recognition.")
-        start_btn = st.button("Start Webcam")
-        stop_btn = st.button("Stop Webcam")
         
-        FRAME_WINDOW = st.image([])
-        
-        if start_btn:
-            from src.realtime import run_realtime
-            # Use generator mode to get frames
-            frame_gen = run_realtime("models/asl_model.pth", use_gui=False)
+        # Check if webcam is available (not in cloud environment)
+        test_cap = cv2.VideoCapture(0)
+        if not test_cap.isOpened():
+            st.info("📷 Webcam mode is only available when running locally. For cloud deployment, please use Image Upload mode.")
+            st.write("To use webcam mode locally, run this app with: `streamlit run streamlit_app.py`")
+        else:
+            test_cap.release()
+            start_btn = st.button("Start Webcam")
+            stop_btn = st.button("Stop Webcam")
             
-            for frame in frame_gen:
-                if stop_btn:
-                    break
-                # Convert BGR to RGB for streamlit
-                frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                FRAME_WINDOW.image(frame_rgb)
+            FRAME_WINDOW = st.image([])
+            
+            if start_btn:
+                from src.realtime import run_realtime
+                # Use generator mode to get frames
+                frame_gen = run_realtime("models/asl_model.pth", use_gui=False)
+                
+                for frame in frame_gen:
+                    if stop_btn:
+                        break
+                    # Convert BGR to RGB for streamlit
+                    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    FRAME_WINDOW.image(frame_rgb)
 
 st.sidebar.markdown("---")
 st.sidebar.subheader("Prediction History")
