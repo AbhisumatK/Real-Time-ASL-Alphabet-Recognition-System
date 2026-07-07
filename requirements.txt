@@ -1,7 +1,7 @@
 torch
 torchvision
 mediapipe
-opencv-contrib-python-headless
+opencv-python-headless
 streamlit
 matplotlib
 pandas
