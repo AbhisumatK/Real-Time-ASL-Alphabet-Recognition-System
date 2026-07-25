@@ -72,7 +72,7 @@ if model:
         # Check if webcam is available (not in cloud environment)
         test_cap = cv2.VideoCapture(0)
         if not test_cap.isOpened():
-            st.info("📷 Webcam mode is only available when running locally. For cloud deployment, please use Image Upload mode.")
+            st.info("Webcam mode is only available when running locally. For cloud deployment, please use Image Upload mode.")
             st.write("To use webcam mode locally, run this app with: `streamlit run streamlit_app.py`")
         else:
             test_cap.release()
